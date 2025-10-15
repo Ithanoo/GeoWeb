@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import {
   Viewer,
-  createWorldTerrain,
+  CesiumTerrainProvider,
   UrlTemplateImageryProvider,
   ImageryLayerCollection
 } from "cesium";
@@ -14,9 +14,10 @@ const GlobeViewer = () => {
   const activeLayers = useAppSelector(selectActiveLayers);
 
   useEffect(() => {
+    let isMounted = true;
+
     if (containerRef.current && !viewerRef.current) {
       viewerRef.current = new Viewer(containerRef.current, {
-        terrainProvider: createWorldTerrain(),
         baseLayerPicker: false,
         geocoder: false,
         animation: false,
@@ -24,9 +25,21 @@ const GlobeViewer = () => {
         sceneModePicker: false,
         navigationHelpButton: false
       });
+
+      CesiumTerrainProvider.fromWorldTerrain()
+        .then((terrainProvider) => {
+          if (isMounted && viewerRef.current) {
+            viewerRef.current.terrainProvider = terrainProvider;
+          }
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Failed to load world terrain", error);
+        });
     }
 
     return () => {
+      isMounted = false;
       viewerRef.current?.destroy();
       viewerRef.current = null;
     };
