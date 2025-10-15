@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import {
   Viewer,
   CesiumTerrainProvider,
+  IonResource,
   UrlTemplateImageryProvider,
   ImageryLayerCollection
 } from "cesium";
@@ -26,16 +27,29 @@ const GlobeViewer = () => {
         navigationHelpButton: false
       });
 
-      CesiumTerrainProvider.fromWorldTerrain()
-        .then((terrainProvider) => {
+      const loadTerrain = async () => {
+        try {
+          const terrainResource = await IonResource.fromAssetId(1);
+          if (!isMounted || !viewerRef.current) {
+            return;
+          }
+
+          const terrainProvider = new CesiumTerrainProvider({
+            url: terrainResource,
+            requestVertexNormals: true,
+            requestWaterMask: true
+          });
+
           if (isMounted && viewerRef.current) {
             viewerRef.current.terrainProvider = terrainProvider;
           }
-        })
-        .catch((error) => {
+        } catch (error) {
           // eslint-disable-next-line no-console
           console.error("Failed to load world terrain", error);
-        });
+        }
+      };
+
+      void loadTerrain();
     }
 
     return () => {
