@@ -1,0 +1,83 @@
+[
+  {
+    "id": "1",
+    "title": "Attaque contre l'hôpital de Dax",
+    "description": "Un ransomware a paralysé les systèmes de l'hôpital pendant 3 jours, empêchant l'accès aux dossiers médicaux et perturbant les soins.",
+    "date": "2023-02-15",
+    "country": "France",
+    "sector": "Santé",
+    "attackType": "Ransomware",
+    "impact": "Données patients exposées, 3 jours d'indisponibilité des systèmes",
+    "geoLocation": { "lat": 43.71, "lng": -0.5 },
+    "geopoliticalContext": "Cette attaque coïncide avec une vague de cyberattaques contre les infrastructures critiques en Europe, attribuée à des groupes proches du Kremlin. La France a renforcé sa cybersécurité depuis le début de la guerre en Ukraine.",
+    "actors": ["APT29"],
+    "sources": [
+      { "name": "ANSSI", "url": "https://www.ssi.gouv.fr/actualite/attaque-contre-lhopital-de-dax" },
+      { "name": "Le Monde", "url": "https://www.lemonde.fr/cyber/attaque-ransomware-hopital-dax" }
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Cyberattaque contre le port de Rotterdam",
+    "description": "Une attaque DDoS a perturbé les opérations du port pendant 24h, causant des retards dans le déchargement des conteneurs.",
+    "date": "2023-01-10",
+    "country": "Pays-Bas",
+    "sector": "Transport",
+    "attackType": "DDoS",
+    "impact": "Perturbation des opérations portuaires, retards dans la chaîne logistique",
+    "geoLocation": { "lat": 51.9225, "lng": 4.47917 },
+    "geopoliticalContext": "L'attaque a été attribuée à un groupe pro-russe en réponse aux sanctions européennes contre la Russie. Le port de Rotterdam est un point stratégique pour le commerce européen.",
+    "actors": ["Killnet"],
+    "sources": [
+      { "name": "Port of Rotterdam", "url": "https://www.portofrotterdam.com/cyber-attack-january-2023" }
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Attaque contre le ministère de la Défense allemand",
+    "description": "Des hackers ont ciblé les systèmes internes du ministère, volant des documents classifiés.",
+    "date": "2023-03-05",
+    "country": "Allemagne",
+    "sector": "Gouvernement",
+    "attackType": "Espionnage",
+    "impact": "Fuite de documents sensibles, compromis de la sécurité nationale",
+    "geoLocation": { "lat": 52.52, "lng": 13.405 },
+    "geopoliticalContext": "Cette attaque est attribuée à APT28, un groupe lié au GRU russe. Elle s'inscrit dans une série d'attaques contre les pays membres de l'OTAN.",
+    "actors": ["APT28"],
+    "sources": [
+      { "name": "Bundeswehr", "url": "https://www.bundeswehr.de/cyber-attack" }
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Ransomware contre Colonial Pipeline",
+    "description": "Une attaque par ransomware a forcé la fermeture du plus grand oléoduc des États-Unis, causant des pénuries de carburant.",
+    "date": "2021-05-07",
+    "country": "États-Unis",
+    "sector": "Énergie",
+    "attackType": "Ransomware",
+    "impact": "Pénuries de carburant sur la côte Est, paiement d'une rançon de 4,4 millions de dollars",
+    "geoLocation": { "lat": 33.749, "lng": -84.388 },
+    "geopoliticalContext": "Cette attaque, attribuée au groupe DarkSide, a mis en lumière la vulnérabilité des infrastructures critiques américaines. Elle a déclenché une réponse du gouvernement américain contre les cybercriminels russes.",
+    "actors": ["DarkSide"],
+    "sources": [
+      { "name": "CISA", "url": "https://www.cisa.gov/colonial-pipeline-ransomware-attack" }
+    ]
+  },
+  {
+    "id": "5",
+    "title": "Attaque contre le Parlement européen",
+    "description": "Des hackers ont ciblé les systèmes du Parlement européen, tentant d'accéder aux emails des députés.",
+    "date": "2022-11-23",
+    "country": "Belgique",
+    "sector": "Gouvernement",
+    "attackType": "Phishing",
+    "impact": "Tentative d'accès non autorisé aux communications internes",
+    "geoLocation": { "lat": 50.8503, "lng": 4.3517 },
+    "geopoliticalContext": "Cette attaque a été attribuée à un groupe pro-russe et coïncide avec les tensions croissantes entre l'UE et la Russie concernant la guerre en Ukraine.",
+    "actors": ["APT29"],
+    "sources": [
+      { "name": "European Parliament", "url": "https://www.europarl.europa.eu/cyber-attack" }
+    ]
+  }
+]

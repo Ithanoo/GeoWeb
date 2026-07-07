@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for Leaflet */
+.leaflet-container {
+  height: 100vh;
+  width: 100%;
+}
+
+/* Fix for Leaflet marker icons */
+.leaflet-marker-icon {
+  background-image: url('https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png');
+}
+.leaflet-marker-shadow {
+  background-image: url('https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png');
+}

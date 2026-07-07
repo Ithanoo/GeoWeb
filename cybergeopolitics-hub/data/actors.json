@@ -1,0 +1,53 @@
+[
+  {
+    "id": "APT29",
+    "name": "APT29 (Cozy Bear)",
+    "country": "Russie",
+    "targets": ["Gouvernements", "Énergie", "Santé", "Recherche"],
+    "modusOperandi": "Utilisation de spear-phishing et de malwares personnalisés. Lié au SVR (service de renseignement russe). Spécialisé dans l'espionnage à long terme.",
+    "sources": [
+      { "name": "MITRE ATT&CK", "url": "https://attack.mitre.org/groups/APT29/" },
+      { "name": "FireEye", "url": "https://www.fireeye.com/current-threats/threat-groups/apt29.html" }
+    ]
+  },
+  {
+    "id": "APT28",
+    "name": "APT28 (Fancy Bear)",
+    "country": "Russie",
+    "targets": ["Gouvernements", "Médias", "Organisations militaires"],
+    "modusOperandi": "Attaques ciblées avec des malwares comme Sofacy et X-Agent. Lié au GRU (renseignement militaire russe). Connu pour ses opérations d'influence.",
+    "sources": [
+      { "name": "MITRE ATT&CK", "url": "https://attack.mitre.org/groups/APT28/" }
+    ]
+  },
+  {
+    "id": "Killnet",
+    "name": "Killnet",
+    "country": "Russie",
+    "targets": ["Infrastructures critiques", "Sites gouvernementaux", "Médias"],
+    "modusOperandi": "Attaques DDoS massives. Groupe hacktiviste pro-russe, actif depuis 2022. Cible principalement les pays soutenant l'Ukraine.",
+    "sources": [
+      { "name": "CISA", "url": "https://www.cisa.gov/killnet" }
+    ]
+  },
+  {
+    "id": "DarkSide",
+    "name": "DarkSide",
+    "country": "Russie (supposé)",
+    "targets": ["Entreprises", "Infrastructures critiques"],
+    "modusOperandi": "Ransomware-as-a-Service (RaaS). Cible les grandes entreprises et exige des rançons en cryptomonnaie. Connu pour l'attaque contre Colonial Pipeline.",
+    "sources": [
+      { "name": "Krebs on Security", "url": "https://krebsonsecurity.com/tag/darkside/" }
+    ]
+  },
+  {
+    "id": "LockBit",
+    "name": "LockBit",
+    "country": "Russie (supposé)",
+    "targets": ["Entreprises", "Hôpitaux", "Écoles"],
+    "modusOperandi": "Ransomware très actif, utilisant un modèle RaaS. Connu pour ses attaques rapides et ses demandes de rançon élevées.",
+    "sources": [
+      { "name": "CISA", "url": "https://www.cisa.gov/lockbit" }
+    ]
+  }
+]
