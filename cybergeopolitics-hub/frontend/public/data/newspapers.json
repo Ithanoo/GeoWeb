@@ -1,0 +1,40 @@
+{
+  "France": [
+    {"name": "Le Monde", "url": "https://www.lemonde.fr"},
+    {"name": "Le Figaro", "url": "https://www.lefigaro.fr"},
+    {"name": "Libération", "url": "https://www.liberation.fr"},
+    {"name": "L'Express", "url": "https://www.lexpress.fr"}
+  ],
+  "Ukraine": [
+    {"name": "Kyiv Post", "url": "https://www.kyivpost.com"},
+    {"name": "Ukrainska Pravda", "url": "https://www.pravda.com.ua/eng/"},
+    {"name": "UNIAN", "url": "https://www.unian.info"}
+  ],
+  "United States": [
+    {"name": "The New York Times", "url": "https://www.nytimes.com"},
+    {"name": "The Washington Post", "url": "https://www.washingtonpost.com"},
+    {"name": "CyberScoop", "url": "https://www.cyberscoop.com"}
+  ],
+  "Japan": [
+    {"name": "NHK News", "url": "https://www.nhk.or.jp"},
+    {"name": "Asahi Shimbun", "url": "https://www.asahi.com"},
+    {"name": "Yomiuri Shimbun", "url": "https://www.yomiuri.co.jp"}
+  ],
+  "Iran": [
+    {"name": "Iran Daily", "url": "https://www.irandaily.ir"},
+    {"name": "Tehran Times", "url": "https://www.tehrantimes.com"}
+  ],
+  "Germany": [
+    {"name": "Der Spiegel", "url": "https://www.spiegel.de"},
+    {"name": "Süddeutsche Zeitung", "url": "https://www.sueddeutsche.de"}
+  ],
+  "United Kingdom": [
+    {"name": "The Guardian", "url": "https://www.theguardian.com"},
+    {"name": "BBC News", "url": "https://www.bbc.com/news"},
+    {"name": "Financial Times", "url": "https://www.ft.com"}
+  ],
+  "China": [
+    {"name": "South China Morning Post", "url": "https://www.scmp.com"},
+    {"name": "Global Times", "url": "https://www.globaltimes.cn"}
+  ]
+}

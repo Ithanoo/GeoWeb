@@ -1,19 +1,36 @@
 import { useState, useEffect } from "react";
 import Map from "../components/Map";
 import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
+import NewspaperPanel from "../components/NewspaperPanel";
 import { Attack } from "../types/attack";
+import { Newspaper, NewspapersByCountry } from "../types/newspaper";
 
 export default function Home() {
+  // Données des attaques
   const [attacks, setAttacks] = useState<Attack[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Données des journaux par pays
+  const [newspapersByCountry, setNewspapersByCountry] = useState<NewspapersByCountry>({});
+
+  // État des filtres (par défaut : topologique activé)
+  const [activeFilters, setActiveFilters] = useState({
+    topological: true,
+    journalistic: false,
+  });
+
+  // État pour le panneau des journaux
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+
+  // Charger les données au montage
   useEffect(() => {
-    // Charger les données statiques pour le MVP
+    // Charger les attaques
     fetch("/data/attacks.json")
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Impossible de charger les données");
+          throw new Error("Impossible de charger les données des attaques");
         }
         return res.json();
       })
@@ -25,7 +42,48 @@ export default function Home() {
         setError(err.message);
         setLoading(false);
       });
+
+    // Charger les journaux
+    fetch("/data/newspapers.json")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Impossible de charger les journaux");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setNewspapersByCountry(data);
+      })
+      .catch((err) => {
+        console.error("Erreur de chargement des journaux:", err);
+      });
   }, []);
+
+  // Gestion des clics sur un pays
+  const handleCountryClick = (countryName: string) => {
+    if (activeFilters.journalistic) {
+      setSelectedCountry(countryName);
+    }
+  };
+
+  // Gestion des changements de filtre
+  const handleFilterChange = (filters: { topological: boolean; journalistic: boolean }) => {
+    setActiveFilters(filters);
+    // Si on désactive le filtre journalistique, fermer le panneau
+    if (!filters.journalistic) {
+      setSelectedCountry(null);
+    }
+  };
+
+  // Fermer le panneau des journaux
+  const handleCloseNewspaperPanel = () => {
+    setSelectedCountry(null);
+  };
+
+  // Récupérer les journaux pour le pays sélectionné
+  const selectedNewspapers: Newspaper[] = selectedCountry 
+    ? newspapersByCountry[selectedCountry] || []
+    : [];
 
   if (loading) {
     return (
@@ -44,11 +102,34 @@ export default function Home() {
   }
 
   return (
-    <div className="h-screen w-full">
+    <div className="h-screen w-full bg-gray-100">
       <Navbar />
-      <div className="h-[calc(100vh-64px)] w-full">
-        <Map attacks={attacks} />
+      
+      {/* Sidebar des filtres à gauche */}
+      <Sidebar 
+        activeFilters={activeFilters} 
+        onFilterChange={handleFilterChange} 
+      />
+      
+      {/* Carte principale */}
+      <div 
+        className="fixed left-64 right-0 top-16 bottom-0" 
+        style={{ zIndex: 10 }}
+      >
+        <Map 
+          attacks={attacks} 
+          activeFilters={activeFilters}
+          onCountryClick={handleCountryClick}
+        />
       </div>
+      
+      {/* Panneau des journaux (glisse depuis la droite) */}
+      <NewspaperPanel 
+        country={selectedCountry || ""} 
+        newspapers={selectedNewspapers}
+        onClose={handleCloseNewspaperPanel}
+        isOpen={selectedCountry !== null && activeFilters.journalistic}
+      />
     </div>
   );
 }
