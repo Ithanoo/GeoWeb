@@ -1,0 +1,132 @@
+[
+  {
+    "id": "2024-001",
+    "title": "Cyberattaque contre le ministère de la Défense ukrainien",
+    "description": "Attaque par ransomware ciblant les systèmes internes du ministère, perturbant les communications pendant 48 heures.",
+    "date": "2024-01-15",
+    "country": "Ukraine",
+    "sector": "Gouvernement",
+    "attackType": "Ransomware",
+    "impact": "Élevé",
+    "geoLocation": {
+      "lat": 50.4501,
+      "lng": 30.5234
+    },
+    "geopoliticalContext": "Contexte de la guerre en Ukraine. Attaque attribuée à des groupes soutenus par l'État russe.",
+    "actors": ["APT29", "Cozy Bear"],
+    "sources": [
+      {
+        "name": "CERT Ukraine",
+        "url": "https://cert.gov.ua"
+      },
+      {
+        "name": "BBC News",
+        "url": "https://bbc.com/ukraine-attack"
+      }
+    ]
+  },
+  {
+    "id": "2024-002",
+    "title": "Intrusion dans le réseau électrique américain",
+    "description": "Tentative d'intrusion dans les systèmes SCADA de plusieurs centrales électriques dans le Midwest.",
+    "date": "2024-02-20",
+    "country": "États-Unis",
+    "sector": "Énergie",
+    "attackType": "Intrusion réseau",
+    "impact": "Critique",
+    "geoLocation": {
+      "lat": 39.8283,
+      "lng": -98.5795
+    },
+    "geopoliticalContext": "Tensions accrues entre les États-Unis et la Chine. Suspicion d'implication de groupes chinois.",
+    "actors": ["APT10", "MenuPass Group"],
+    "sources": [
+      {
+        "name": "CISA",
+        "url": "https://cisa.gov/advisory"
+      },
+      {
+        "name": "Reuters",
+        "url": "https://reuters.com/us-power-grid-attack"
+      }
+    ]
+  },
+  {
+    "id": "2024-003",
+    "title": "Attaque DDoS contre les institutions financières européennes",
+    "description": "Vague massive d'attaques DDoS ciblant les principales banques en Europe, causant des interruptions de service.",
+    "date": "2024-03-10",
+    "country": "France",
+    "sector": "Finance",
+    "attackType": "DDoS",
+    "impact": "Moyen",
+    "geoLocation": {
+      "lat": 48.8566,
+      "lng": 2.3522
+    },
+    "geopoliticalContext": "Réponse à des sanctions économiques. Groupes hacktivistes pro-russes revendiquent l'attaque.",
+    "actors": ["Killnet", "NoName057(16)"],
+    "sources": [
+      {
+        "name": "ANSSI",
+        "url": "https://anssi.fr/advisory"
+      },
+      {
+        "name": "Le Monde",
+        "url": "https://lemonde.fr/ddos-europe"
+      }
+    ]
+  },
+  {
+    "id": "2024-004",
+    "title": "Vol de données médicales au Japon",
+    "description": "Compromission d'une base de données contenant les dossiers médicaux de millions de patients.",
+    "date": "2024-04-05",
+    "country": "Japon",
+    "sector": "Santé",
+    "attackType": "Vol de données",
+    "impact": "Élevé",
+    "geoLocation": {
+      "lat": 35.6762,
+      "lng": 139.6503
+    },
+    "geopoliticalContext": "Attaque opportuniste par des groupes criminels. Pas d'attribution à un État.",
+    "actors": ["Unknown"],
+    "sources": [
+      {
+        "name": "JPCERT",
+        "url": "https://jpcert.or.jp"
+      },
+      {
+        "name": "NHK News",
+        "url": "https://nhk.or.jp/medical-data-breach"
+      }
+    ]
+  },
+  {
+    "id": "2024-005",
+    "title": "Sabotage du système de contrôle aérien en Iran",
+    "description": "Attaque par malware ciblant les systèmes de contrôle du trafic aérien, causant des retards majeurs.",
+    "date": "2024-05-12",
+    "country": "Iran",
+    "sector": "Transport",
+    "attackType": "Malware",
+    "impact": "Critique",
+    "geoLocation": {
+      "lat": 35.6892,
+      "lng": 51.3890
+    },
+    "geopoliticalContext": "Contexte de tensions régionales. Suspicion d'implication israélienne ou américaine.",
+    "actors": ["APT34", "OilRig"],
+    "sources": [
+      {
+        "name": "Iran CERT",
+        "url": "https://cert.ir"
+      },
+      {
+        "name": "Al Jazeera",
+        "url": "https://aljazeera.com/iran-air-traffic-attack"
+      }
+    ]
+  }
+]

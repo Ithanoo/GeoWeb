@@ -1,0 +1,157 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "France",
+        "iso": "FRA"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-5.14, 41.36],
+            [-5.14, 51.09],
+            [9.56, 51.09],
+            [9.56, 41.36],
+            [-5.14, 41.36]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ukraine",
+        "iso": "UKR"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [22.14, 44.0],
+            [22.14, 52.4],
+            [40.23, 52.4],
+            [40.23, 44.0],
+            [22.14, 44.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "United States",
+        "iso": "USA"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-125.0, 24.0],
+            [-125.0, 50.0],
+            [-66.0, 50.0],
+            [-66.0, 24.0],
+            [-125.0, 24.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Japan",
+        "iso": "JPN"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [128.0, 30.0],
+            [128.0, 46.0],
+            [146.0, 46.0],
+            [146.0, 30.0],
+            [128.0, 30.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Iran",
+        "iso": "IRN"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [44.0, 25.0],
+            [44.0, 39.8],
+            [63.5, 39.8],
+            [63.5, 25.0],
+            [44.0, 25.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Germany",
+        "iso": "DEU"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [5.8, 47.2],
+            [5.8, 55.1],
+            [15.0, 55.1],
+            [15.0, 47.2],
+            [5.8, 47.2]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "United Kingdom",
+        "iso": "GBR"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-10.5, 49.8],
+            [-10.5, 60.9],
+            [1.8, 60.9],
+            [1.8, 49.8],
+            [-10.5, 49.8]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "China",
+        "iso": "CHN"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [73.5, 18.0],
+            [73.5, 54.0],
+            [135.0, 54.0],
+            [135.0, 18.0],
+            [73.5, 18.0]
+          ]
+        ]
+      }
+    }
+  ]
+}
