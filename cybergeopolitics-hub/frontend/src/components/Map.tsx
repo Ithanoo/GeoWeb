@@ -40,9 +40,18 @@ function CountryLayers({ onCountryClick, journalisticActive }: {
   const map = useMap();
   const [geoJsonLayer, setGeoJsonLayer] = useState<L.Layer | null>(null);
 
-  // Charger et configurer le GeoJSON
+  // Style dynamique selon le filtre journalistique
+  const getStyle = (active: boolean) => ({
+    fillColor: "#3b82f6",
+    weight: active ? 2 : 1,
+    opacity: active ? 1 : 0.3,
+    color: "#3b82f6",
+    fillOpacity: active ? 0.2 : 0,
+  });
+
+  // Charger et configurer le GeoJSON via GitHub (vraies frontières des pays)
   useEffect(() => {
-    fetch("/data/countries.geo.json")
+    fetch("https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson")
       .then((res) => res.json())
       .then((data) => {
         // Supprimer l'ancien layer s'il existe
@@ -50,23 +59,21 @@ function CountryLayers({ onCountryClick, journalisticActive }: {
           map.removeLayer(geoJsonLayer);
         }
 
-        // Créer le nouveau layer
+        // Créer le nouveau layer avec style dynamique
         const layer = L.geoJSON(data, {
-          style: (feature) => ({
-            fillColor: journalisticActive ? "#3b82f6" : "transparent",
-            weight: 2,
-            opacity: 1,
-            color: journalisticActive ? "#ffffff" : "#3b82f6",
-            fillOpacity: journalisticActive ? 0.1 : 0,
-          }),
+          style: getStyle(journalisticActive),
           onEachFeature: (feature, layer) => {
             if (feature.properties && feature.properties.name) {
-              layer.on({
-                click: () => {
-                  if (journalisticActive) {
-                    onCountryClick(feature.properties.name);
-                  }
-                },
+              // Cli toujours actif
+              layer.on("click", () => onCountryClick(feature.properties.name));
+              // Feedback visuel au survol (cast en L.Path pour setStyle)
+              layer.on("mouseover", () => {
+                (layer as L.Path).setStyle({ weight: 3, opacity: 1, fillOpacity: 0.3 });
+                (layer as L.Path).bindTooltip(feature.properties.name, { permanent: false }).openTooltip();
+              });
+              layer.on("mouseout", () => {
+                (layer as L.Path).setStyle(getStyle(journalisticActive));
+                (layer as L.Path).closeTooltip();
               });
             }
           },
@@ -120,13 +127,11 @@ export default function Map({
         />
       )}
       
-      {/* Layer des pays (pour la détection des clics - filtre journalistique) */}
-      {activeFilters.journalistic && (
-        <CountryLayers 
-          onCountryClick={onCountryClick} 
-          journalisticActive={activeFilters.journalistic} 
-        />
-      )}
+      {/* Layer des pays (cadrillage visible si filtre journalistique activé) */}
+      <CountryLayers 
+        onCountryClick={onCountryClick} 
+        journalisticActive={activeFilters.journalistic} 
+      />
       
       {/* Marqueurs des attaques */}
       {attacks.map((attack) => (
