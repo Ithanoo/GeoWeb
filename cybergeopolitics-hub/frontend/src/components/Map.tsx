@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -32,47 +32,122 @@ const baseMapLayers = {
 // Layer pour la topologie (relief, frontières détaillées)
 const topologyLayer = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
 
-// Composant pour gérer les couches de pays
-function CountryLayers({ onCountryClick, journalisticActive }: { 
+// Composant pour les frontières noires (visuelles uniquement)
+function CountryBorders() {
+  const map = useMap();
+  const bordersLayerRef = useRef<L.Layer | null>(null);
+
+  useEffect(() => {
+    // ✅ Backend local (Docker) - Remplace GitHub
+    fetch("http://localhost:3001/api/countries")
+      .then((res) => res.json())
+      .then((data) => {
+        if (bordersLayerRef.current) {
+          map.removeLayer(bordersLayerRef.current);
+        }
+
+        const layer = L.geoJSON(data, {
+          style: () => ({
+            fillColor: "transparent",
+            weight: 1,
+            opacity: 0.8,
+            color: "#111111",  // ✅ Frontières NOIRES
+            fillOpacity: 0
+          })
+        });
+
+        layer.addTo(map);
+        bordersLayerRef.current = layer;
+      })
+      .catch((err) => console.error("Erreur de chargement des frontières:", err));
+
+    return () => {
+      if (bordersLayerRef.current) {
+        map.removeLayer(bordersLayerRef.current);
+      }
+    };
+  }, [map]);
+
+  return null;
+}
+
+// Composant pour gérer les couches de pays (cliquables - UNIQUEMENT avec filtre Journalistique)
+// NOTE: Plus tard, ces données viendront d'une base de données
+function CountryLayers({ onCountryClick }: { 
   onCountryClick: (countryName: string) => void;
-  journalisticActive: boolean;
 }) {
   const map = useMap();
-  const [geoJsonLayer, setGeoJsonLayer] = useState<L.Layer | null>(null);
+  // Utiliser useRef au lieu de useState pour éviter les rechargements inutiles
+  const geoJsonLayerRef = useRef<L.Layer | null>(null);
 
-  // Style dynamique selon le filtre journalistique
-  const getStyle = (active: boolean) => ({
-    fillColor: "#3b82f6",
-    weight: active ? 2 : 1,
-    opacity: active ? 1 : 0.3,
-    color: "#3b82f6",
-    fillOpacity: active ? 0.2 : 0,
-  });
-
-  // Charger et configurer le GeoJSON via GitHub (vraies frontières des pays)
+  // Charger le GeoJSON 110m UNE SEULE FOIS (frontières précises + léger)
   useEffect(() => {
-    fetch("https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson")
+    // ✅ Backend local (Docker) - Remplace GitHub
+    fetch("http://localhost:3001/api/countries")
       .then((res) => res.json())
       .then((data) => {
         // Supprimer l'ancien layer s'il existe
-        if (geoJsonLayer) {
-          map.removeLayer(geoJsonLayer);
+        if (geoJsonLayerRef.current) {
+          map.removeLayer(geoJsonLayerRef.current);
         }
 
-        // Créer le nouveau layer avec style dynamique
+        // Créer le layer : invisible mais cliquable par défaut, visible au survol
         const layer = L.geoJSON(data, {
-          style: getStyle(journalisticActive),
+          style: () => ({
+            fillColor: "#3b82f6",
+            weight: 1,
+            opacity: 0,
+            color: "#3b82f6",
+            fillOpacity: 0,
+          }),
           onEachFeature: (feature, layer) => {
-            if (feature.properties && feature.properties.name) {
-              // Cli toujours actif
-              layer.on("click", () => onCountryClick(feature.properties.name));
-              // Feedback visuel au survol (cast en L.Path pour setStyle)
-              layer.on("mouseover", () => {
-                (layer as L.Path).setStyle({ weight: 3, opacity: 1, fillOpacity: 0.3 });
-                (layer as L.Path).bindTooltip(feature.properties.name, { permanent: false }).openTooltip();
+            // Le GeoJSON Natural Earth utilise 'NAME' (majuscules)
+            const countryName = feature.properties?.NAME || feature.properties?.name;
+            if (countryName) {
+              // Cli : ferme les popups existantes + ouvre la nouvelle
+              layer.on("click", () => {
+                map.closePopup(); // ✅ Ferme TOUTES les pop-ups avant d'en ouvrir une nouvelle
+                onCountryClick(countryName);
+                // Popup avec les journaux pour ce pays
+                (layer as L.Path).bindPopup(`
+                  <div class="p-3 min-w-[200px]">
+                    <h3 class="font-bold text-lg text-blue-800 mb-2">${countryName}</h3>
+                    <div class="text-sm text-gray-700">
+                      <p class="font-medium mb-1">Journaux disponibles :</p>
+                      <ul class="list-disc list-inside space-y-1">
+                        <li><a href="#" class="text-blue-600 hover:underline">Le Monde</a></li>
+                        <li><a href="#" class="text-blue-600 hover:underline">BBC News</a></li>
+                        <li><a href="#" class="text-blue-600 hover:underline">The Guardian</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                `, {
+                  className: "leaflet-popup-custom",
+                  maxWidth: 300
+                }).openPopup();
               });
+              
+              // ✅ Afficher UNIQUEMENT au survol (style amélioré pour plus de clarté)
+              layer.on("mouseover", () => {
+                (layer as L.Path).setStyle({
+                  weight: 3,
+                  opacity: 1,
+                  fillOpacity: 0.3,
+                  fillColor: "#60a5fa",
+                  color: "#1d4ed8"
+                });
+                (layer as L.Path).bindTooltip(countryName, {
+                  permanent: false
+                }).openTooltip();
+              });
+              
+              // ✅ Masquer en sortant
               layer.on("mouseout", () => {
-                (layer as L.Path).setStyle(getStyle(journalisticActive));
+                (layer as L.Path).setStyle({
+                  weight: 1,
+                  opacity: 0,
+                  fillOpacity: 0
+                });
                 (layer as L.Path).closeTooltip();
               });
             }
@@ -80,17 +155,17 @@ function CountryLayers({ onCountryClick, journalisticActive }: {
         });
 
         layer.addTo(map);
-        setGeoJsonLayer(layer);
+        geoJsonLayerRef.current = layer;
       })
       .catch((err) => console.error("Erreur de chargement des pays:", err));
 
     return () => {
-      // Nettoyage
-      if (geoJsonLayer) {
-        map.removeLayer(geoJsonLayer);
+      // Nettoyage au démontage du composant
+      if (geoJsonLayerRef.current) {
+        map.removeLayer(geoJsonLayerRef.current);
       }
     };
-  }, [map, journalisticActive, geoJsonLayer, onCountryClick]);
+  }, [map, onCountryClick]); // ✅ Plus de geoJsonLayer dans les dépendances = pas de rechargement
 
   return null;
 }
@@ -127,11 +202,13 @@ export default function Map({
         />
       )}
       
-      {/* Layer des pays (cadrillage visible si filtre journalistique activé) */}
-      <CountryLayers 
-        onCountryClick={onCountryClick} 
-        journalisticActive={activeFilters.journalistic} 
-      />
+      {/* Frontières noires (toujours visibles - juste visuel) */}
+      <CountryBorders />
+      
+      {/* Calques cliquables (UNIQUEMENT avec filtre Journalistique) */}
+      {activeFilters.journalistic && (
+        <CountryLayers onCountryClick={onCountryClick} />
+      )}
       
       {/* Marqueurs des attaques */}
       {attacks.map((attack) => (
